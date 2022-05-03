@@ -1,11 +1,16 @@
-import './List.css';
+import './LoadMore.css'
+import { useRef } from 'react'
+import useIntersection from '../../hooks/useIntersection'
 
-function List() {
+function LoadMore() {
+  const ref = useRef<HTMLDivElement>(null)
+  useIntersection<HTMLDivElement>(ref, () => {})
+
   return (
-    <div className="list">
-      list
+    <div ref={ref} className="LoadMore">
+      loading...
     </div>
-  );
+  )
 }
 
-export default List;
+export default LoadMore

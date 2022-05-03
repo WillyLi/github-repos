@@ -1,4 +1,4 @@
-import './List.css';
+import './List.css'
 import { IRepo } from '../../hooks/useGetSearchRepoAPI/types'
 import Item from '../Item'
 interface IListProps {
@@ -6,12 +6,8 @@ interface IListProps {
 }
 
 function List({ repoList }: IListProps) {
-  const items = repoList.map(repo => (
-    <Item repo={repo} key={repo.id} />
-  ))
-  return (
-    <ul className="list">{items}</ul>
-  );
+  const items = repoList.map((repo) => <Item repo={repo} key={repo.id} />)
+  return <ul className="list">{items}</ul>
 }
 
-export default List;
+export default List

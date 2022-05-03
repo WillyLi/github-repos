@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import Item from '..';
+import { render, screen } from '@testing-library/react'
+import Item from '..'
 
 test('renders learn react link', () => {
   const mockRepo = {
@@ -16,8 +16,7 @@ test('renders learn react link', () => {
     updated_at: '2022-04-21T04:03:03Z',
     description: 'this is description'
   }
-  render(<Item repo={mockRepo} />);
-  const linkElement = screen.getByRole('a');
-  expect(linkElement).toHaveAttribute('src', 'https://github.com/Dcard');
-});
-
+  render(<Item repo={mockRepo} />)
+  const linkElement = screen.getByRole('a')
+  expect(linkElement).toHaveAttribute('src', 'https://github.com/Dcard')
+})

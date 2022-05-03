@@ -1,2 +1,2 @@
-import LoadMore from "./LoadMore"
-export default LoadMore;
+import LoadMore from './LoadMore'
+export default LoadMore
