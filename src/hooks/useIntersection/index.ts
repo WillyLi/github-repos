@@ -1,16 +1,19 @@
 import { useEffect, RefObject } from 'react'
-interface ObserverOption {
-  readonly root: Element | null
-  readonly rootMargin: string
-  readonly threshold: number | Array<number>
-}
-
+const BUFFER = 300
 export default function useIntersection<T extends Element>(
   ref: RefObject<T>,
-  callback: IntersectionObserverCallback,
-  option?: ObserverOption
+  callback: () => void,
 ): void {
-  const observer = new IntersectionObserver(callback, option)
+  const config = {
+    rootMargin: `${BUFFER}px 0px ${BUFFER}px 0px`
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        callback()
+      }
+    })
+  }, config)
 
   useEffect(() => {
     if (ref.current) {

@@ -14,4 +14,5 @@ export interface IRepo {
 }
 export interface IResponse {
   items: IRepo[]
+  total_count:number
 }

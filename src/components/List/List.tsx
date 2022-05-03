@@ -6,7 +6,7 @@ interface IListProps {
 }
 
 function List({ repoList }: IListProps) {
-  const items = repoList.map((repo) => <Item repo={repo} key={repo.id} />)
+  const items = repoList.map((repo, index) => <Item repo={repo} key={repo.id + index} />)
   return <ul className="list">{items}</ul>
 }
 

@@ -3,18 +3,23 @@ import axios from 'axios'
 import { IResponse, IRepo } from './types'
 
 const store: {
-  [query: string]: IRepo[]
+  [query: string]: {
+    items: IRepo[],
+    count: number
+  }
 } = {}
+
+const PER_PAGE = 30
 
 function useGetSearchRepoAPI() {
   const [query, setQuery] = useState('')
   const [repoList, setRepoList] = useState<IRepo[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
-  const per_page = 30
+  const [hasMore, setHasMore] = useState(true)
 
-  const getStartIndex = (page: number) => (page - 1) * per_page
-  const getEndIndex = (page: number) => page * per_page - 1
+  const getStartIndex = (page: number) => (page - 1) * PER_PAGE
+  const getEndIndex = (page: number) => page * PER_PAGE - 1
 
   const fetch = () => {
     setIsLoading(true)
@@ -22,18 +27,19 @@ function useGetSearchRepoAPI() {
       .get<IResponse>('https://api.github.com/search/repositories', {
         params: {
           q: query,
-          per_page,
+          per_page: PER_PAGE,
           page
         }
       })
       .then(({ data }) => {
         const start = getStartIndex(page)
+        store[query]['count'] = data.total_count
         data.items.forEach((repo, index) => {
-          store[query][start + index] = repo
+          store[query]['items'][start + index] = repo
         })
       })
       .catch(({ response }) => {
-        console.error(response.message)
+        console.error(response.data.message)
       })
       .finally(() => {
         setIsLoading(false)
@@ -43,21 +49,27 @@ function useGetSearchRepoAPI() {
   const fetchHandler = async () => {
     if (!query || isLoading) return
     if (!store[query]) {
-      store[query] = []
+      store[query] = {
+        items: [],
+        count: 0
+      }
     }
     const startIndex = getStartIndex(page)
     const endIndex = getEndIndex(page)
-    const hasFetched = store[query][startIndex]
+    const hasFetched = store[query]['items'][startIndex]
     if (!hasFetched) {
       await fetch()
     }
-    setRepoList(store[query].slice(0, endIndex))
+    if (store[query]['items'].length >= store[query]['count']) {
+      setHasMore(false)
+    }
+    setRepoList(store[query]['items'].slice(0, endIndex))
   }
 
   useEffect(() => {
     fetchHandler()
   }, [query, page])
 
-  return { query, repoList, setQuery, setPage, page, isLoading }
+  return { query, repoList, setQuery, setPage, page, isLoading, hasMore }
 }
 export default useGetSearchRepoAPI
