@@ -38,8 +38,10 @@ function App() {
           Exceed Rate Limit, please wait for 1 minute
         </div>
       )}
-      <List repoList={repoList} />
-      {isLoading && <Loader />}
+      <div className={styles.list}>
+        {repoList.length > 0 && <List repoList={repoList} />}
+        {isLoading && <Loader />}
+      </div>
       {!isLoading && query && hasMore && <LoadMore onLoadMore={onLoadMore} />}
     </div>
   )

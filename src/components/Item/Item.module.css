@@ -13,3 +13,53 @@
 .link:hover {
   box-shadow: 0 0 3px #ccc;
 }
+
+.name {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.desc {
+  color: #777;
+  word-break: break-word;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
+.avatar img {
+  width: 100%;
+}
+
+.metas {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.metas>div {
+  font-size: 12px;
+  line-height: 25px;
+  margin-right: 10px;
+  height: 25px;
+  padding: 0 10px;
+  border-radius: 25px;
+  background-color: #666;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+  min-width: 40px;
+  box-sizing: border-box;
+}

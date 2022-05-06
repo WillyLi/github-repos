@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
-import { IResponse, IRepo } from './types'
+import { IResponse, IRepo, IParsedRepo } from './types'
 import repoParser from '../../utils/repoParser'
 
 const store: {
   [query: string]: {
-    items: IRepo[]
+    items: IParsedRepo[]
     count: number
   }
 } = {}
@@ -14,7 +14,7 @@ const PER_PAGE = 30
 
 function useGetSearchRepoAPI() {
   const [query, setQuery] = useState('')
-  const [repoList, setRepoList] = useState<IRepo[]>([])
+  const [repoList, setRepoList] = useState<IParsedRepo[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)

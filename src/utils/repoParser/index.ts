@@ -1,27 +1,30 @@
-import { IRepo } from '../../hooks/useGetSearchRepoAPI/types'
+import { IRepo, IParsedRepo } from '../../hooks/useGetSearchRepoAPI/types'
+import abbreviationNumber from '../abbreviationNumber'
 
-const repoParser = (repo: IRepo): IRepo => {
+const repoParser = (repo: IRepo): IParsedRepo => {
   const {
     id,
     name,
-    git_url,
+    html_url,
     owner: { avatar_url, login },
     watchers_count,
     forks_count,
     stargazers_count,
     updated_at,
-    description
+    description,
+    language
   } = repo
   return {
     id,
     name,
-    git_url,
+    html_url,
     owner: { avatar_url, login },
-    watchers_count,
-    forks_count,
-    stargazers_count,
+    watchers_count: abbreviationNumber(watchers_count, 1),
+    forks_count: abbreviationNumber(forks_count, 1),
+    stargazers_count: abbreviationNumber(stargazers_count, 1),
     updated_at,
-    description
+    description,
+    language
   }
 }
 

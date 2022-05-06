@@ -1,9 +1,9 @@
-import { IRepo } from '../../hooks/useGetSearchRepoAPI/types'
+import { IParsedRepo } from '../../hooks/useGetSearchRepoAPI/types'
 import Item from '../Item'
 import styles from './List.module.css'
 
 interface IListProps {
-  repoList: IRepo[]
+  repoList: IParsedRepo[]
 }
 
 function List({ repoList }: IListProps) {
