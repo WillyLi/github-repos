@@ -5,16 +5,11 @@ interface ILoadMoreProps {
   onLoadMore(): void
 }
 
-
 function LoadMore({ onLoadMore }: ILoadMoreProps) {
   const ref = useRef<HTMLDivElement>(null)
   useIntersection<HTMLDivElement>(ref, onLoadMore)
 
-  return (
-    <div ref={ref} className="LoadMore">
-      loading...
-    </div>
-  )
+  return <div ref={ref} className="LoadMore"></div>
 }
 
 export default LoadMore

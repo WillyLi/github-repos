@@ -4,6 +4,7 @@ import List from '../List'
 import useGetSearchRepoAPI from '../../hooks/useGetSearchRepoAPI'
 import debounce from 'lodash.debounce'
 import LoadMore from '../LoadMore'
+import Loader from '../Loader'
 
 function App() {
   const { query, setQuery, repoList, setPage, page, isLoading, hasMore } =
@@ -24,6 +25,7 @@ function App() {
       <List repoList={repoList} />
       {'query:' + query}
       {!isLoading && query && hasMore && <LoadMore onLoadMore={onLoadMore} />}
+      {isLoading && <Loader />}
     </div>
   )
 }
