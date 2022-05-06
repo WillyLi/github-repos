@@ -10,6 +10,7 @@ function Input({ onChange }: IInputProps) {
       <input
         type="text"
         defaultValue=""
+        placeholder="type the repo name here..."
         onChange={(e) => {
           onChange(e.target.value)
         }}

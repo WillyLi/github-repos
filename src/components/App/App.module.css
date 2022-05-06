@@ -1,0 +1,17 @@
+.app {
+  max-width: 800px;
+  margin: auto;
+  padding-top: 30px;
+  background-color: white;
+  box-shadow: 0 0 5px #aaa;
+}
+
+.heading {
+  text-align: center;
+}
+
+.error {
+  text-align: center;
+  font-size: 24px;
+  padding: 20px;
+}

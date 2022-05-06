@@ -1,14 +1,23 @@
-import './App.css'
+import styles from './App.module.css'
 import Input from '../Input'
 import List from '../List'
-import useGetSearchRepoAPI from '../../hooks/useGetSearchRepoAPI'
-import debounce from 'lodash.debounce'
 import LoadMore from '../LoadMore'
 import Loader from '../Loader'
 
+import useGetSearchRepoAPI from '../../hooks/useGetSearchRepoAPI'
+import debounce from 'lodash.debounce'
+
 function App() {
-  const { query, setQuery, repoList, setPage, page, isLoading, hasMore } =
-    useGetSearchRepoAPI()
+  const {
+    query,
+    setQuery,
+    repoList,
+    setPage,
+    page,
+    isLoading,
+    hasMore,
+    isLocked
+  } = useGetSearchRepoAPI()
 
   const onInputChange = debounce((val: string) => {
     setQuery(val)
@@ -20,12 +29,17 @@ function App() {
   }, 2000)
 
   return (
-    <div className="App">
+    <div className={styles.app}>
+      <h1 className={styles.heading}>Search Repos on Github</h1>
       <Input onChange={onInputChange} />
+      {isLocked && (
+        <div className={styles.error}>
+          Exceed Rate Limit, please wait for 1 minute{' '}
+        </div>
+      )}
       <List repoList={repoList} />
-      {'query:' + query}
-      {!isLoading && query && hasMore && <LoadMore onLoadMore={onLoadMore} />}
       {isLoading && <Loader />}
+      {!isLoading && query && hasMore && <LoadMore onLoadMore={onLoadMore} />}
     </div>
   )
 }
