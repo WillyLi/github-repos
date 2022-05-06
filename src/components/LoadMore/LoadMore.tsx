@@ -1,4 +1,3 @@
-import './LoadMore.css'
 import { useRef } from 'react'
 import useIntersection from '../../hooks/useIntersection'
 interface ILoadMoreProps {

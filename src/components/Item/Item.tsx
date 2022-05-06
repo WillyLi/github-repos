@@ -1,4 +1,4 @@
-import './Item.css'
+import styles from './Item.module.css'
 import { IRepo } from '../../hooks/useGetSearchRepoAPI/types'
 
 interface IListProps {
@@ -8,8 +8,8 @@ interface IListProps {
 function Item({ repo }: IListProps) {
   const { git_url, name, description } = repo
   return (
-    <li className="item">
-      <a href={git_url}>
+    <li className={styles.item}>
+      <a href={git_url} className={styles.link}>
         <div>{name}</div>
         <div>{description}</div>
       </a>
