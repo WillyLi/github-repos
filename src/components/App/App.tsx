@@ -6,6 +6,7 @@ import Loader from '../Loader'
 
 import useGetSearchRepoAPI from '../../hooks/useGetSearchRepoAPI'
 import debounce from 'lodash.debounce'
+import throttle from 'lodash.throttle'
 
 function App() {
   const {
@@ -24,9 +25,9 @@ function App() {
     setPage(1)
   }, 500)
 
-  const onLoadMore = debounce(() => {
+  const onLoadMore = throttle(() => {
     setPage(page + 1)
-  }, 2000)
+  }, 5000)
 
   return (
     <div className={styles.app}>
@@ -34,7 +35,7 @@ function App() {
       <Input onChange={onInputChange} />
       {isLocked && (
         <div className={styles.error}>
-          Exceed Rate Limit, please wait for 1 minute{' '}
+          Exceed Rate Limit, please wait for 1 minute
         </div>
       )}
       <List repoList={repoList} />

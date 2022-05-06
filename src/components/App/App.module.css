@@ -4,6 +4,8 @@
   padding-top: 30px;
   background-color: white;
   box-shadow: 0 0 5px #aaa;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .heading {
