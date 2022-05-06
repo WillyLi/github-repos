@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { IResponse, IRepo } from './types'
+import repoParser from '../../utils/repoParser'
 
 const store: {
   [query: string]: {
@@ -36,7 +37,7 @@ function useGetSearchRepoAPI() {
           const start = getStartIndex(page)
           store[query]['count'] = data.total_count
           data.items.forEach((repo, index) => {
-            store[query]['items'][start + index] = repo
+            store[query]['items'][start + index] = repoParser(repo)
           })
         })
         .catch(({ response }) => {
