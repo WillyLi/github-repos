@@ -17,13 +17,13 @@ function useGetSearchRepoAPI() {
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
+  const [isLocked, setIsLocked] = useState(false)
 
   const getStartIndex = (page: number) => (page - 1) * PER_PAGE
   const getEndIndex = (page: number) => page * PER_PAGE - 1
 
   const fetchData = useCallback(async () => {
     const fetch = async () => {
-      setIsLoading(true)
       return axios
         .get<IResponse>('https://api.github.com/search/repositories', {
           params: {
@@ -41,12 +41,18 @@ function useGetSearchRepoAPI() {
         })
         .catch(({ response }) => {
           console.error(response.data.message)
-        })
-        .finally(() => {
-          setIsLoading(false)
+          setIsLocked(true)
+          setTimeout(() => {
+            setIsLocked(false)
+          }, 60000)
         })
     }
-    if (!query || isLoading) return
+    if (!query) {
+      setRepoList([])
+      return
+    }
+    if (isLoading || isLocked) return
+    setIsLoading(true)
     if (!store[query]) {
       store[query] = {
         items: [],
@@ -64,12 +70,22 @@ function useGetSearchRepoAPI() {
       setHasMore(false)
     }
     setRepoList(store[query]['items'].slice(0, endIndex))
-  }, [query, page, isLoading])
+    setIsLoading(false)
+  }, [query, page, isLoading, isLocked])
 
   useEffect(() => {
     fetchData()
   }, [fetchData])
 
-  return { query, repoList, setQuery, setPage, page, isLoading, hasMore }
+  return {
+    query,
+    repoList,
+    setQuery,
+    setPage,
+    page,
+    isLoading,
+    hasMore,
+    isLocked
+  }
 }
 export default useGetSearchRepoAPI
